@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Eid Mubarak, Dalia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style-1.css"/>
+  <link rel="stylesheet" href="animations.css"/>
+</head>
+<body>
+
+  <!-- ─── LOADING SCREEN ─── -->
+  <div id="loader">
+    <div class="loader-inner">
+      <div class="loader-moon">
+        <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="loaderMoonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#c084fc"/>
+              <stop offset="100%" stop-color="#8b5cf6"/>
+            </linearGradient>
+            <filter id="loaderGlow">
+              <feGaussianBlur stdDeviation="3" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+          <path d="M50,15 A35,35 0 1,0 85,50 A29,29 0 1,1 50,15 Z" fill="url(#loaderMoonGrad)" filter="url(#loaderGlow)"/>
+        </svg>
+      </div>
+      <div class="loader-stars"></div>
+      <p class="loader-text" data-text="عيد مبارك">عيد أضحي مبارك</p>
+      <div class="loader-bar"><div class="loader-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- ─── CUSTOM CURSOR ─── -->
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <!-- ─── PARTICLES CANVAS ─── -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- ─── SCROLL PROGRESS ─── -->
+  <div id="scroll-progress"></div>
+
+  <!-- ─── MUSIC CONTROLS ─── -->
+  <div id="music-ctrl" class="music-ctrl hidden" title="Toggle music">
+    <div class="music-icon" id="music-icon">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <span class="music-label">Ambient</span>
+  </div>
+
+  <!-- ─── NOTIFICATION TOAST ─── -->
+  <div id="toast" class="toast"></div>
+
+  <!-- ─── NAV ─── -->
+  <nav id="main-nav" class="hidden">
+    <div class="nav-logo">Dalia</div>
+    <div class="nav-links">
+      <a href="#hero" class="nav-link">Home</a>
+      <button id="dark-mode-toggle" class="nav-link" style="background:none; border:none; cursor:pointer; font-size:1.1rem;" title="Toggle Mode">🌓</button>
+      <a href="timeline.html" class="nav-link nav-cta">Our Story</a>
+    </div>
+  </nav>
+
+  <!-- ─── HERO SECTION ─── -->
+  <section id="hero">
+    <!-- Layered parallax backgrounds -->
+    <div class="parallax-layer layer-1" id="pl1"></div>
+    <div class="parallax-layer layer-2" id="pl2"></div>
+    <div class="parallax-layer layer-3" id="pl3"></div>
+
+    <!-- Crescent Moon -->
+    <div class="moon-wrap" id="moon-wrap">
+      <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="tlMoonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c084fc"/>
+      <stop offset="100%" stop-color="#6b21a8"/>
+    </linearGradient>
+    <filter id="tlGlow">
+      <feGaussianBlur stdDeviation="4" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M80,20 A60,60 0 1,0 140,80 A50,50 0 1,1 80,20 Z" fill="url(#tlMoonGrad)" filter="url(#tlGlow)"/>
+</svg>
+    </div>
+
+    <!-- Decorative geometric lines (Islamic pattern inspired) -->
+    <div class="geo-lines" id="geo-lines">
+      <svg viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg" class="geo-svg">
+        <g opacity="0.12" stroke="#9d4edd" stroke-width="0.5" fill="none">
+          <circle cx="400" cy="400" r="300"/>
+          <circle cx="400" cy="400" r="220"/>
+          <circle cx="400" cy="400" r="140"/>
+          <line x1="400" y1="100" x2="400" y2="700"/>
+          <line x1="100" y1="400" x2="700" y2="400"/>
+          <line x1="188" y1="188" x2="612" y2="612"/>
+          <line x1="612" y1="188" x2="188" y2="612"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- Hero content -->
+    <div class="hero-content" id="hero-content">
+      <div class="eid-arabic reveal-up" id="eid-ar">عيد الأضحى المبارك</div>
+      <h1 class="hero-title" id="hero-title">
+        <span class="title-line" id="tl1">Eid Mubarak,</span>
+        <span class="title-name" id="tl2">Dalia</span>
+        <span class="title-star" id="tl3">✦</span>
+      </h1>
+      <p class="hero-sub" id="hero-sub">
+        Some people change the meaning of Eid…<br/>
+        <em>and you became one of them.</em>
+      </p>
+      <div class="hero-divider" id="hero-div">
+        <span></span><span class="div-diamond">◆</span><span></span>
+      </div>
+      <button class="enter-btn" id="enter-btn">
+        <span class="btn-text">Enter The Celebration</span>
+        <span class="btn-glow"></span>
+        <svg class="btn-arrow" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </button>
+      <!-- Easter egg: tiny "I purple you" hidden in stars -->
+      <div class="easter-purple" id="easter-purple" title="✦">I purple you</div>
+    </div>
+
+    <!-- Lanterns floating -->
+    <div class="lantern lantern-1" id="l1"></div>
+    <div class="lantern lantern-2" id="l2"></div>
+    <div class="lantern lantern-3" id="l3"></div>
+  </section>
+
+  <!-- ─── QUOTE SECTION ─── -->
+  <section id="quotes-section" class="hidden">
+    <div class="quote-container" id="quote-container">
+      <div class="quote-mark">"</div>
+      <p class="quote-text" id="quote-text"></p>
+      <div class="quote-author">— Shreif</div>
+    </div>
+    <div class="quote-dots" id="quote-dots"></div>
+  </section>
+
+  <!-- ─── PAGE TRANSITION OVERLAY ─── -->
+  <div id="page-transition">
+    <div class="pt-layer pt-1"></div>
+    <div class="pt-layer pt-2"></div>
+    <div class="pt-layer pt-3"></div>
+  </div>
+
+  <!-- ─── SCRIPTS ─── -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="particles.js"></script>
+  <script src="music.js"></script>
+  <script src="animations.js"></script>
+  <script src="main.js"></script>
+</body>
+</html>

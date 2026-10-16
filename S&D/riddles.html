@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>The Mystery Gallery — Dalia & Sherif</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght=0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet"/>
+
+  <style>
+  /* ══════════════════════════════════════════════════
+     DESIGN SYSTEM — PRECISE GLASSMORPHISM (LIGHT BASE)
+  ══════════════════════════════════════════════════ */
+  :root {
+    /* الألوان الافتراضية بقت الفاتحة المنعشة المبهجة المتناسقة مع بقية الموقع */
+    --clr-bg:        #fcfaff; 
+    --clr-bg2:       #f3e8ff; 
+    --clr-bg3:       #e9d5ff; 
+    --clr-purple:    #8b5cf6;
+    --clr-purple-m:  #a78bfa;
+    --clr-purple-d:  #6b21a8;
+    --clr-purple-xd: #4c1d95;
+    --clr-rose:      #db2777;
+    --clr-rose-l:    #f472b6;
+    
+    /* زجاج مصنفر فاتح ناصع */
+    --clr-glass:     rgba(255, 255, 255, 0.55);
+    --clr-glass-b:   rgba(139, 92, 246, 0.18);
+    --clr-glass-bh:  rgba(139, 92, 246, 0.4);
+    
+    --clr-text:      #2e1065; 
+    --clr-muted:     #6d28d9; 
+    
+    --font-arabic:   'Noto Naskh Arabic', serif;
+    --font-serif:    'Cormorant Garamond', serif;
+    --font-sans:     'Josefin Sans', sans-serif;
+    --radius-card:   20px;
+    --shadow-card:   0 12px 40px rgba(46, 16, 101, 0.05);
+    --ease-spring:   cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-expo:     cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* ─── DARK MODE TOKENS ─── */
+  body.dark-mode {
+    --clr-bg:        #0a0516; 
+    --clr-bg2:       #120a24; 
+    --clr-bg3:       #1c1136; 
+    --clr-text:      #f3e8ff; 
+    --clr-muted:     #c084fc; 
+    --clr-glass:     rgba(18, 10, 36, 0.65); 
+    --clr-glass-b:   rgba(167, 139, 250, 0.12);
+    --clr-glass-bh:  rgba(167, 139, 250, 0.35);
+    --shadow-card:   0 12px 44px rgba(0, 0, 0, 0.5);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--clr-bg);
+    color: var(--clr-text);
+    font-family: var(--font-arabic);
+    min-height: 100vh;
+    overflow-x: hidden;
+    cursor: none !important;
+    transition: background 0.4s ease, color 0.4s ease;
+  }
+
+  /* ─── ANTI-SCROLL CELESTIAL CURSOR ─── */
+  #cursor {
+    position: fixed !important; 
+    width: 12px !important; height: 12px !important; border-radius: 50% !important;
+    background: var(--clr-purple) !important; pointer-events: none !important; z-index: 2147483647 !important;
+    top: 0 !important; left: 0 !important; opacity: 1 !important;
+    will-change: transform;
+  }
+  #cursor-ring {
+    position: fixed !important; 
+    width: 36px !important; height: 36px !important; border-radius: 50% !important;
+    border: 1px solid rgba(139, 92, 246, 0.5) !important; pointer-events: none !important; z-index: 2147483646 !important;
+    top: 0 !important; left: 0 !important; opacity: 1 !important;
+    will-change: transform;
+  }
+  body.card-hover  #cursor { background: var(--clr-rose) !important; width: 16px !important; height: 16px !important; }
+  body.card-hover  #cursor-ring { width: 48px !important; height: 48px !important; border-color: rgba(219,39,119,.6) !important; }
+  body.input-focus #cursor { background: var(--clr-purple-m) !important; width: 6px !important; height: 6px !important; }
+
+  html, body, *, a, button, select, input, [role="button"], ::-webkit-scrollbar {
+    cursor: none !important;
+  }
+
+  /* ─── BG CANVAS & AURORA ─── */
+  #bg-canvas {
+    position: fixed; inset: 0; width: 100%; height: 100%;
+    z-index: 0; pointer-events: none;
+  }
+  .aurora {
+    position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  }
+  .aurora span {
+    position: absolute; border-radius: 50%; filter: blur(80px);
+    animation: auroraMove linear infinite alternate;
+  }
+  .aurora span:nth-child(1) {
+    width:700px; height:700px; top:-20%; left:-15%;
+    background: radial-gradient(circle,rgba(139,92,246,.08),transparent 70%);
+    animation-duration:14s;
+  }
+  .aurora span:nth-child(2) {
+    width:500px; height:500px; bottom:-10%; right:-10%;
+    background: radial-gradient(circle,rgba(219,39,119,.06),transparent 70%);
+    animation-duration:11s; animation-delay:-5s;
+  }
+  @keyframes auroraMove { to { transform: translate(40px,30px) scale(1.1); } }
+
+  .noise {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .02;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  #scroll-progress {
+    position: fixed; top: 0; left: 0; height: 2px; z-index: 1000;
+    background: linear-gradient(90deg, var(--clr-purple), var(--clr-rose));
+    width: 0%; transition: width .1s;
+    box-shadow: 0 0 10px var(--clr-purple);
+  }
+
+  /* ─── MAIN NAV ─── */
+  #main-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 32px;
+    background: rgba(252, 250, 255, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(139,92,246,.12);
+    transform: translateY(-100%);
+    transition: transform .5s var(--ease-expo), background 0.3s;
+  }
+  body.dark-mode #main-nav {
+    background: rgba(10, 5, 22, 0.85);
+  }
+  #main-nav.visible { transform: translateY(0); }
+  
+  .nav-logo {
+    display: flex; align-items: center; gap: 8px;
+    text-decoration: none; color: var(--clr-purple-d);
+    font-family: var(--font-arabic); font-size: 1.1rem;
+    font-weight: 500;
+  }
+  .nav-logo svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; flex-shrink: 0; }
+  .nav-center {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: 1.1rem; color: var(--clr-muted); opacity: 0.7;
+  }
+  .nav-right { display: flex; align-items: center; gap: 12px; }
+  
+  #dark-mode-toggle {
+    background: none; border: 1px solid rgba(139,92,246,.2);
+    border-radius: 50%; width: 36px; height: 36px;
+    cursor: pointer; font-size: 1rem;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--clr-muted); transition: border-color .3s, background .3s;
+  }
+  #dark-mode-toggle:hover { border-color: var(--clr-purple); background: rgba(139,92,246,.1); }
+
+  /* ─── HERO & PROGRESS ─── */
+  #tl-hero {
+    position: relative; z-index: 2;
+    min-height: 50vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 100px 24px 40px; text-align: center;
+  }
+  .tl-eyebrow {
+    font-family: var(--font-sans); font-size: .7rem; letter-spacing: .3em;
+    text-transform: uppercase; color: var(--clr-purple-m); margin-bottom: 16px;
+    opacity: 0; transform: translateY(20px);
+    animation: fadeUp 1s var(--ease-expo) .3s forwards;
+  }
+  .tl-hero-title {
+    font-family: var(--font-serif); font-weight: 300;
+    font-size: clamp(2.8rem, 8vw, 6.5rem); line-height: 1.05;
+    color: var(--clr-text);
+    opacity: 0; transform: translateY(32px);
+    animation: fadeUp 1.3s var(--ease-expo) .5s forwards;
+  }
+  .tl-hero-title em { 
+    font-style: italic; 
+    background: linear-gradient(135deg, var(--clr-purple-d), var(--clr-rose));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-family: var(--font-arabic); font-size: 1.1rem;
+    color: var(--clr-muted); margin-top: 16px;
+    opacity: 0; transform: translateY(18px);
+    animation: fadeUp 1s var(--ease-expo) .85s forwards;
+  }
+  .dalia-name {
+    font-weight: 600;
+    background: linear-gradient(135deg, var(--clr-rose), #9d174d);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: inline-block;
+  }
+  .hero-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg,transparent,var(--clr-purple),transparent);
+    margin: 24px auto 0;
+    opacity: 0; animation: fadeUp 1s var(--ease-expo) 1.1s forwards;
+  }
+  .hero-orb {
+    position: absolute; border-radius: 50%; pointer-events: none;
+    animation: orbRise linear infinite; filter: blur(30px);
+  }
+  @keyframes orbRise { from{transform:translateY(0) scale(1);opacity:.4;} to{transform:translateY(-110vh) scale(.4);opacity:0;} }
+  @keyframes fadeUp  { to{opacity:1;transform:translateY(0);} }
+
+  .progress-section {
+    position: relative; z-index: 2;
+    max-width: 460px; margin: 0 auto 16px;
+    padding: 0 24px; text-align: center;
+  }
+  .progress-label {
+    font-family: var(--font-sans); font-size: .65rem; letter-spacing: .25em;
+    text-transform: uppercase; color: var(--clr-muted); margin-bottom: 8px;
+  }
+  .progress-track { height: 4px; border-radius: 10px; background: rgba(139,92,246,.08); overflow: hidden; }
+  #prog-fill {
+    height: 100%; border-radius: 10px; width: 0%;
+    background: linear-gradient(90deg, var(--clr-purple), var(--clr-rose));
+    transition: width .8s var(--ease-expo);
+    box-shadow: 0 0 8px var(--clr-purple-m);
+  }
+  #prog-count {
+    font-family: var(--font-serif); font-style: italic;
+    font-size: .9rem; color: var(--clr-muted); margin-top: 6px;
+  }
+
+  /* ─── GALLERY GRID & CARDS ─── */
+  .gallery-grid {
+    position: relative; z-index: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 24px; padding: 24px 32px 80px;
+    max-width: 1200px; margin: 0 auto;
+  }
+
+  .riddle-card {
+    background: var(--clr-glass);
+    border: 1px solid var(--clr-glass-b);
+    border-radius: var(--radius-card);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    transition: transform .4s var(--ease-spring), box-shadow .4s, border-color .4s, background 0.3s;
+    position: relative;
+    opacity: 0; transform: translateY(40px) scale(.98);
+  }
+  .riddle-card.in-view { animation: cardIn .7s var(--ease-expo) forwards; }
+  .riddle-card:hover  { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(139,92,246,0.12); border-color: var(--clr-glass-bh); }
+  .riddle-card.solved { border-color: rgba(219,39,119,.3); }
+
+  /* ─── CARD VISUALS FIXES ─── */
+  .image-container { position: relative; width: 100%; height: 200px; overflow: hidden; background: var(--clr-bg2); }
+  .card-canvas     { position: absolute; inset: 0; width: 100%; height: 100%; }
+  
+  /* معالجة الـ Veil الفاتح والداكن */
+  .canvas-veil     {
+    position: absolute; inset: 0;
+    background: rgba(252, 250, 255, 0.55); /* خلفية زجاجية مضيئة في وضع الـ Light */
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    transition: opacity 0.8s var(--ease-expo), background 0.3s;
+    z-index: 1;
+  }
+  body.dark-mode .canvas-veil {
+    background: rgba(11, 6, 20, 0.65);
+  }
+  .riddle-card.solved .canvas-veil { opacity: 0; pointer-events: none; }
+
+  .blur-overlay {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    pointer-events: none; z-index: 3;
+    transition: opacity .5s var(--ease-expo), transform .5s var(--ease-spring);
+  }
+  .lock-svg { 
+    width: 44px; height: 44px; 
+    stroke: var(--clr-purple);
+    filter: drop-shadow(0 4px 12px rgba(139,92,246,0.25)); 
+    flex-shrink: 0; /* منع انكماش الأيقونة نهائياً */
+  }
+  .riddle-card.solved .blur-overlay { opacity: 0; transform: scale(.5) rotate(15deg); }
+  
+  .card-num {
+    position: absolute; bottom: 8px; right: 14px;
+    font-family: var(--font-serif); font-size: 3.5rem; font-weight: 300; line-height: 1;
+    color: rgba(139, 92, 246, 0.15); pointer-events: none; z-index: 2;
+  }
+  .riddle-card.solved .card-num { opacity: 0; }
+
+  .solved-badge {
+    position: absolute; top: 12px; left: 12px; z-index: 10;
+    background: linear-gradient(135deg, var(--clr-rose), #9d174d);
+    border-radius: 20px; padding: 4px 12px;
+    font-family: var(--font-sans); font-size: .65rem; letter-spacing: .1em;
+    text-transform: uppercase; color: #fff;
+    opacity: 0; transform: scale(.7);
+    transition: opacity .4s var(--ease-spring), transform .4s var(--ease-spring);
+    flex-shrink: 0;
+    box-shadow: 0 4px 12px rgba(219,39,119,.3);
+  }
+  .riddle-card.solved .solved-badge { opacity: 1; transform: scale(1); }
+
+  /* ─── CARD BODY & ROW CONTROL ─── */
+  .riddle-content { padding: 20px; position: relative; z-index: 2; }
+  .card-label {
+    font-family: var(--font-sans); font-size: .65rem; letter-spacing: .2em;
+    text-transform: uppercase; color: var(--clr-muted); margin-bottom: 8px;
+  }
+  .riddle-question {
+    font-family: var(--font-arabic); font-size: 0.95rem; color: var(--clr-text);
+    line-height: 1.7; margin-bottom: 16px; min-height: 48px;
+    font-weight: 500;
+  }
+  
+  /* قفل صف الإدخال لعدم تداخل العناصر */
+  .input-row { display: flex; align-items: center; gap: 8px; width: 100%; }
+  
+  .riddle-input {
+    flex: 1; padding: 10px 16px;
+    border: 1px solid rgba(139, 92, 246, 0.25);
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 30px; color: var(--clr-text);
+    font-family: var(--font-arabic); font-size: .9rem;
+    text-align: right; outline: none;
+    transition: border-color .3s, background .3s, box-shadow .3s;
+  }
+  body.dark-mode .riddle-input { background: rgba(139, 92, 246, 0.05); }
+  .riddle-input::placeholder { color: rgba(46, 16, 101, 0.35); }
+  body.dark-mode .riddle-input::placeholder { color: rgba(196,181,253,.3); }
+  
+  .riddle-input:focus { border-color: var(--clr-purple); background: #fff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  body.dark-mode .riddle-input:focus { background: rgba(139,92,246,.1); }
+  
+  .riddle-input.error { border-color: #ef4444 !important; box-shadow: 0 0 0 3px rgba(239,68,68,.15) !important; animation: shake .4s ease; }
+  
+  .send-btn {
+    width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+    background: linear-gradient(135deg, var(--clr-purple), var(--clr-purple-d));
+    border: none; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: transform .3s var(--ease-spring), box-shadow .3s;
+    box-shadow: 0 4px 12px rgba(139,92,246,.3);
+  }
+  .send-btn:hover { transform: scale(1.12); box-shadow: 0 6px 16px rgba(139,92,246,.45); }
+  .send-btn svg { width: 14px; height: 14px; fill: none; stroke: #fff; stroke-width: 2.5; flex-shrink: 0; }
+  
+  .dots-row { display: flex; gap: 5px; margin-top: 10px; justify-content: flex-end; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: rgba(139,92,246,.2); transition: background .3s, transform .3s var(--ease-spring); }
+  .dot.hit { background: #ef4444; transform: scale(1.2); }
+  
+  .cheat-btn {
+    background: none; border: none; color: var(--clr-rose);
+    font-family: var(--font-arabic); font-size: .8rem; font-weight: 500;
+    cursor: pointer; display: none; margin-top: 12px;
+    position: relative; padding-bottom: 2px;
+  }
+  .cheat-btn::after { content:''; position: absolute; bottom: 0; right: 0; width: 0; height: 1px; background: var(--clr-rose); transition: width .3s; }
+  .cheat-btn:hover::after { width: 100%; }
+  
+  .story-reveal {
+    font-family: var(--font-serif); font-style: italic;
+    color: var(--clr-text); font-size: .95rem; line-height: 1.6;
+    margin-top: 12px; padding-top: 12px;
+    border-top: 1px solid rgba(219,39,119,.15);
+    display: none; opacity: 0; transition: opacity .6s;
+  }
+  .story-reveal.show { display: block; }
+
+  /* ─── TOAST & CELEBRATION ─── */
+  #toast-wrap { position: fixed; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 2000; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; }
+  .toast { padding: 12px 24px; background: var(--clr-bg2); border: 1px solid var(--clr-glass-b); border-radius: 30px; color: var(--clr-text); font-family: var(--font-arabic); font-size: .88rem; backdrop-filter: blur(15px); box-shadow: var(--shadow-card); animation: toastIn .4s var(--ease-spring) forwards; max-width: 320px; text-align: center; }
+  .toast.out { animation: toastOut .3s ease forwards; }
+
+  #celebration { position: fixed; inset: 0; z-index: 3000; display: none; align-items: center; justify-content: center; pointer-events: none; }
+  #celebration.on { display: flex; }
+  #celebration-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .cel-text { position: relative; z-index: 1; font-family: var(--font-serif); font-style: italic; font-size: clamp(1.8rem, 5vw, 3.8rem); text-align: center; color: #fff; line-height: 1.3; text-shadow: 0 0 40px var(--clr-rose), 0 0 80px var(--clr-purple); animation: celPop .6s var(--ease-spring); }
+
+  footer { position: relative; z-index: 2; text-align: center; padding: 40px 24px 60px; font-family: var(--font-serif); font-style: italic; font-size: .85rem; color: var(--clr-muted); opacity: 0.4; cursor: pointer; }
+
+  /* ─── EASTER EGG SYSTEM ─── */
+  #egg-backdrop { position: fixed; inset: 0; z-index: 4000; background: rgba(5,2,12,.8); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity .4s; }
+  #egg-backdrop.open { display: flex; }
+  #egg-backdrop.visible { opacity: 1; }
+  #egg-modal { position: relative; max-width: 440px; width: 90%; background: linear-gradient(145deg, rgba(255,255,255,0.95), rgba(243,232,255,0.95)); border: 1px solid rgba(139,92,246,.3); border-radius: 24px; padding: 40px 32px; text-align: center; box-shadow: 0 20px 80px rgba(139,92,246,.15); transform: scale(.85) translateY(20px); transition: transform .5s var(--ease-spring); }
+  body.dark-mode #egg-modal { background: linear-gradient(145deg, rgba(18,10,36,.98), rgba(30,14,55,.98)); }
+  #egg-backdrop.visible #egg-modal { transform: scale(1) translateY(0); }
+  .egg-icon { font-size: 3rem; display: block; margin-bottom: 12px; }
+  .egg-found-label { font-family: var(--font-sans); font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--clr-rose); margin-bottom: 8px; }
+  .egg-title { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; margin-bottom: 14px; color: var(--clr-text); }
+  .egg-msg { font-family: var(--font-arabic); font-size: 1rem; line-net: 1.75; color: var(--clr-text); opacity: 0.85; }
+  .egg-close { margin-top: 24px; padding: 10px 28px; background: linear-gradient(135deg, var(--clr-purple), var(--clr-rose)); border: none; border-radius: 30px; color: #fff; font-family: var(--font-arabic); font-size: .88rem; cursor: pointer; transition: transform .3s var(--ease-spring); }
+  .egg-close:hover { transform: scale(1.05); }
+
+  .hot-spot { position: fixed; cursor: pointer; z-index: 100; border-radius: 50%; }
+  #secret-input-area { position: fixed; bottom: 18px; right: 18px; z-index: 200; opacity: 0; pointer-events: none; transition: opacity .4s; }
+  #secret-input-area.show { opacity: 1; pointer-events: auto; }
+  #secret-field { padding: 8px 16px; border-radius: 30px; background: var(--clr-glass); border: 1px solid var(--clr-glass-b); color: var(--clr-text); font-family: var(--font-arabic); font-size: .85rem; outline: none; backdrop-filter: blur(10px); }
+
+  @keyframes cardIn   { to{opacity:1;transform:translateY(0) scale(1);} }
+  @keyframes toastIn  { from{opacity:0;transform:translateY(14px) scale(.95);} to{opacity:1;transform:translateY(0) scale(1);} }
+  @keyframes toastOut { to{opacity:0;transform:translateY(6px) scale(.95);} }
+  @keyframes celPop   { from{transform:scale(.5);opacity:0;} to{transform:scale(1);opacity:1;} }
+  @keyframes shake    { 0%,100%{transform:translateX(0);} 20%,60%{transform:translateX(-6px);} 40%,80%{transform:translateX(6px);} }
+
+  @media (max-width:600px) {
+    .gallery-grid { grid-template-columns: 1fr; padding: 16px; gap: 16px; }
+    #main-nav { padding: 12px 16px; }
+    .nav-center { display: none; }
+  }
+  </style>
+</head>
+
+<body class="timeline-body">
+  <div class="aurora"><span></span><span></span><span></span></div>
+  <div class="noise"></div>
+  <canvas id="bg-canvas"></canvas>
+  <div id="scroll-progress"></div>
+  
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+  <div id="toast-wrap"></div>
+
+  <div id="egg-backdrop">
+    <div id="egg-modal">
+      <span class="egg-icon" id="egg-icon">💜</span>
+      <p class="egg-found-label">✦ Secret Unlocked ✦</p>
+      <h2 class="egg-title" id="egg-title">وجدتِ سراً مخبياً</h2>
+      <p class="egg-msg" id="egg-msg">كل حاجة فيها سر لو دورتِ كويس 💜</p>
+      <button class="egg-close" id="egg-close">إغلاق ✨</button>
+    </div>
+  </div>
+
+  <div class="hot-spot" id="hs-corner" style="bottom:55px;left:16px;width:38px;height:38px;"></div>
+  <div class="hot-spot" id="hs-logo"   style="top:12px;left:50%;margin-left:-19px;width:38px;height:38px;"></div>
+
+  <div id="secret-input-area">
+    <input id="secret-field" type="text" placeholder="اكتبي السر..." autocomplete="off" dir="rtl"/>
+  </div>
+
+  <div id="celebration">
+    <canvas id="celebration-canvas"></canvas>
+    <div class="cel-text">
+      ✨ داليا فتحتِ كل الأسرار ✨<br/>
+      <small style="font-size:.5em;opacity:.7;">every secret unlocked 💜</small>
+    </div>
+  </div>
+
+  <nav id="main-nav" class="visible">
+    <a href="timeline.html" class="nav-logo nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      <span>Back</span>
+    </a>
+    <div class="nav-center">The Mystery Gallery</div>
+    <div class="nav-right">
+      <button id="dark-mode-toggle" title="Toggle theme">🌓</button>
+    </div>
+  </nav>
+
+  <section id="tl-hero">
+    <p class="tl-eyebrow">Interactive Space — Dalia &amp; Sherif</p>
+    <h1 class="tl-hero-title">The Mystery<br/><em>Gallery</em></h1>
+    <p class="hero-sub">فكّي الألغاز وافتحي الذكريات يا <span class="dalia-name">داليا</span> 💜</p>
+    <div class="hero-divider"></div>
+  </section>
+
+  <div class="progress-section">
+    <p class="progress-label">Progress — تقدمك</p>
+    <div class="progress-track"><div id="prog-fill"></div></div>
+    <p id="prog-count">0 / 10 ذكريات مكتشفة</p>
+  </div>
+
+  <main class="gallery-grid" id="mystery-gallery-grid"></main>
+  <footer>crafted with love for Dalia 💜 — every riddle a secret, every answer a memory</footer>
+
+  <script>
+  /* ════ DATA ════ */
+  const GALLERY_DATA = [
+    {id:1,  img:"image1.jpg", hint:"المكان اللي شربنا فيه أول قهوة سوا؟",               answer:"كورنيش المنيا", story:"Our very first coffee capsule. A beautiful day to remember.",        colors:["#8b5cf6","#6d28d9","#a78bfa"], shape:"circles"},
+    {id:2,  img:"image2.jpg", hint:"أول كلمة قلتهالك لما شوفتك هنا؟",                   answer:"منورة",         story:"The exact moment my universe became brighter.",                    colors:["#db2777","#9d174d","#f472b6"], shape:"stars"  },
+    {id:3,  img:"image3.jpg", hint:"اسم المكان اللي رحناه في اللحظة دي؟",                answer:"المول",         story:"Walking down the aisles, laughing at things only we understood.", colors:["#7c3aed","#4c1d95","#c4b5fd"], shape:"lines"  },
+    {id:4,  img:"image4.jpg", hint:"تاريخ اليوم ده كان كام؟ (اكتب الشهر مثلاً أكتوبر)", answer:"أكتوبر",        story:"Autumn leaves and sweet memories under the stars.",                colors:["#be185d","#831843","#fbcfe8"], shape:"rings"  },
+    {id:5,  img:"image5.jpg", hint:"كنتِ لابسة طرحة لونها إيه وقتها؟",                  answer:"بنفسجي",        story:"Your favorite color, matching perfectly with my heart's layout.",  colors:["#8b5cf6","#db2777","#a78bfa"], shape:"waves"  },
+    {id:6,  img:"image1.jpg", hint:"اللعبة اللي لعبناها سوا هنا؟",                       answer:"ترامبولين",     story:"Defying gravity, jumping and laughing like pure kids.",            colors:["#6d28d9","#5b21b6","#7c3aed"], shape:"circles"},
+    {id:7,  img:"image2.jpg", hint:"الساعة كانت كام بالتقريب لما اتكلمنا هنا؟",         answer:"منتصف الليل",  story:"Midnight whispers that carved our future into the stars.",          colors:["#1e1b4b","#312e81","#818cf8"], shape:"stars"  },
+    {id:8,  img:"image3.jpg", hint:"اسم الأغنية اللي كنا بنسمعها؟",                     answer:"أضحى وعيد",     story:"Music sounds different when your hand is in mine.",                colors:["#9d174d","#db2777","#f9a8d4"], shape:"lines"  },
+    {id:9,  img:"image4.jpg", hint:"مين اللي التقط لينا الكارت ده؟",                     answer:"أحمد",          story:"Captured by family, kept forever in our personal drive.",          colors:["#5b21b6","#7c3aed","#a78bfa"], shape:"rings"  },
+    {id:10, img:"image5.jpg", hint:"إحساسنا في اللحظة دي كان إيه؟",                     answer:"سلام",          story:"No noise, no worries. Just pure unbothered peace next to you.",    colors:["#8b5cf6","#db2777","#c4b5fd"], shape:"waves"  }
+  ];
+
+  const clean = s => s.trim().toLowerCase().replace(/[أإآا]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/\s+/g,' ');
+
+  /* ════ BG PARTICLES ════ */
+  (function(){
+    const cv=document.getElementById('bg-canvas'), ctx=cv.getContext('2d');
+    let W,H,pts=[];
+    const init=()=>{
+      W=cv.width=window.innerWidth; H=cv.height=window.innerHeight;
+      pts=Array.from({length:60},()=>({
+        x:Math.random()*W, y:Math.random()*H,
+        r:Math.random()*1.4+.3,
+        vx:(Math.random()-.5)*.2, vy:-Math.random()*.25-.05,
+        a:Math.random()*.6+.1, c:Math.random()>.5?'#8b5cf6':'#db2777'
+      }));
+    };
+    init(); window.addEventListener('resize',init);
+    (function f(){
+      ctx.clearRect(0,0,W,H);
+      pts.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy;
+        if(p.y<-8){p.y=H+8;p.x=Math.random()*W;}
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+        ctx.fillStyle=p.c+Math.floor(p.a*200).toString(16).padStart(2,'0');
+        ctx.fill();
+      });
+      requestAnimationFrame(f);
+    })();
+  })();
+
+  /* ════ SHAPES PIPELINE ════ */
+  const SHAPES = {
+    circles(ctx,w,h,c,t){
+      ctx.clearRect(0,0,w,h);
+      for(let i=0;i<6;i++){
+        const x=w/2+Math.cos(t*.45+i*1.1)*(w*.25);
+        const y=h/2+Math.sin(t*.35+i*1.1)*(h*.28);
+        const r=16+12*Math.sin(t+i);
+        const g=ctx.createRadialGradient(x,y,0,x,y,r);
+        g.addColorStop(0,c[i%c.length]+'aa'); g.addColorStop(1,c[i%c.length]+'00');
+        ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+      }
+    },
+    stars(ctx,w,h,c,t){
+      ctx.clearRect(0,0,w,h);
+      const cx=w/2, cy=h/2;
+      for(let i=0;i<5;i++){
+        const a=t*.25+(i/5)*Math.PI*2;
+        const d=38+22*Math.sin(t*.5+i);
+        const x=cx+Math.cos(a)*d, y=cy+Math.sin(a)*d, sz=6+4*Math.sin(t+i);
+        ctx.save(); ctx.translate(x,y); ctx.rotate(a+t*.4);
+        ctx.beginPath();
+        for(let j=0;j<5;j++){
+          const p=(j*4*Math.PI)/5, q=p+Math.PI/5;
+          j===0?ctx.moveTo(Math.cos(p)*sz,Math.sin(p)*sz):ctx.lineTo(Math.cos(p)*sz,Math.sin(p)*sz);
+          ctx.lineTo(Math.cos(q)*sz*.4,Math.sin(q)*sz*.4);
+        }
+        ctx.closePath(); ctx.fillStyle=c[i%c.length]+'b3'; ctx.fill(); ctx.restore();
+      }
+    },
+    lines(ctx,w,h,c,t){
+      ctx.clearRect(0,0,w,h);
+      for(let i=0;i<7;i++){
+        const base=(i/7)*h+8;
+        const g=ctx.createLinearGradient(0,0,w,0);
+        g.addColorStop(0,c[0]+'00'); g.addColorStop(.5,c[i%c.length]+'77'); g.addColorStop(1,c[2]+'00');
+        ctx.beginPath(); ctx.moveTo(0,base);
+        for(let x=0;x<=w;x+=6) ctx.lineTo(x,base+Math.sin((x/w*Math.PI*2)+t+i)*10);
+        ctx.strokeStyle=g; ctx.lineWidth=1.5; ctx.stroke();
+      }
+    },
+    rings(ctx,w,h,c,t){
+      ctx.clearRect(0,0,w,h);
+      for(let i=1;i<=4;i++){
+        const r=i*24+Math.sin(t*.4+i)*4;
+        ctx.beginPath(); ctx.arc(w/2,h/2,r,0,Math.PI*2);
+        ctx.strokeStyle=c[(i-1)%c.length]+'44'; ctx.lineWidth=1.2; ctx.stroke();
+      }
+    },
+    waves(ctx,w,h,c,t){
+      ctx.clearRect(0,0,w,h);
+      for(let l=0;l<2;l++){
+        const g=ctx.createLinearGradient(0,0,w,0);
+        g.addColorStop(0,c[l%c.length]+'00'); g.addColorStop(.5,c[l%c.length]+'44'); g.addColorStop(1,c[l%c.length]+'00');
+        ctx.beginPath(); ctx.moveTo(0,h);
+        for(let x=0;x<=w;x+=5) ctx.lineTo(x,h*(0.4+l*.15)+Math.sin(x/w*Math.PI+t+l)*15);
+        ctx.lineTo(w,h); ctx.closePath(); ctx.fillStyle=g; ctx.fill();
+      }
+    }
+  };
+
+  function startCanvas(canvas, colors, shape){
+    const ctx=canvas.getContext('2d'); let t=0, raf;
+    (function f(){ t+=.02; SHAPES[shape](ctx,canvas.width,canvas.height,colors,t); raf=requestAnimationFrame(f); })();
+    return ()=>cancelAnimationFrame(raf);
+  }
+
+  /* ─── INTERACTION HANDLERS ─── */
+  function showToast(msg, ms=2500){
+    const wrap=document.getElementById('toast-wrap');
+    const el=document.createElement('div'); el.className='toast'; el.textContent=msg;
+    wrap.appendChild(el);
+    setTimeout(()=>{ el.classList.add('out'); setTimeout(()=>el.remove(),350); }, ms);
+  }
+
+  let solved=0;
+  function updateProgress(){
+    const total=GALLERY_DATA.length;
+    document.getElementById('prog-fill').style.width=(solved/total*100)+'%';
+    document.getElementById('prog-count').textContent=solved+' / '+total+' ذكريات مكتشفة';
+    if(solved===total) setTimeout(celebrate,600);
+  }
+
+  function celebrate(){
+    const cel=document.getElementById('celebration'); cel.classList.add('on');
+    const cv=document.getElementById('celebration-canvas');
+    cv.width=window.innerWidth; cv.height=window.innerHeight;
+    const ctx=cv.getContext('2d');
+    const pieces=Array.from({length:140},()=>({
+      x:Math.random()*cv.width, y:-20,
+      vx:(Math.random()-.5)*5, vy:Math.random()*4+2,
+      w:Math.random()*8+4, h:Math.random()*12+5,
+      col:['#8b5cf6','#db2777','#a78bfa','#fff'][Math.floor(Math.random()*4)],
+      rot:Math.random()*Math.PI*2, rv:(Math.random()-.5)*.2, g:.06
+    }));
+    let f=0;
+    (function drop(){
+      ctx.clearRect(0,0,cv.width,cv.height);
+      pieces.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.vy+=p.g; p.rot+=p.rv;
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+        ctx.fillStyle=p.col; ctx.globalAlpha=Math.max(0,1-f/150);
+        ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
+      });
+      f++;
+      if(f<200) requestAnimationFrame(drop); else cel.classList.remove('on');
+    })();
+  }
+
+  function solveCard(card, input){
+    if(card.classList.contains('solved')) return;
+    card.classList.add('solved'); solved++;
+    input.style.display='none';
+    card.querySelector('.send-btn').style.display='none';
+    card.querySelector('.dots-row').style.display='none';
+    const cheat=card.querySelector('.cheat-btn'); if(cheat) cheat.style.display='none';
+    const story=card.querySelector('.story-reveal');
+    story.classList.add('show'); setTimeout(()=>{ story.style.opacity='1'; },30);
+    updateProgress();
+    showToast('🔓 تم فك تشفير الذكرى بنجاح! 💜',2500);
+  }
+
+  function handleAnswer(input){
+    const card=input.closest('.riddle-card');
+    if(card.classList.contains('solved')) return;
+    if(clean(input.value)===clean(input.dataset.answer)){ solveCard(card,input); return; }
+    let att=parseInt(input.dataset.attempts||0)+1;
+    input.dataset.attempts=att;
+    input.classList.add('error');
+    setTimeout(()=>input.classList.remove('error'),400);
+    const dot=card.querySelector('.dots-row .dot:nth-child('+att+')');
+    if(dot) dot.classList.add('hit');
+    if(att>=3){
+      const cb=card.querySelector('.cheat-btn'); if(cb) cb.style.display='inline-block';
+      showToast('المحاولات خلصت، تقدري تظهري السر دلوقتي 🔑',3000);
+    } else {
+      showToast('إجابة خاطئة! متبقي '+(3-att)+' محاولات 😅',2000);
+    }
+  }
+
+  /* ─── BUILD GALLERY ─── */
+  document.addEventListener('DOMContentLoaded',()=>{
+    const grid=document.getElementById('mystery-gallery-grid');
+
+    GALLERY_DATA.forEach((item,idx)=>{
+      const card=document.createElement('div');
+      card.className='riddle-card'; card.id='card-'+item.id;
+      card.innerHTML=`
+        <div class="image-container">
+          <canvas class="card-canvas" width="400" height="210"></canvas>
+          <div class="canvas-veil"></div>
+          <div class="blur-overlay">
+            <svg class="lock-svg" viewBox="0 0 24 24" fill="none" stroke-width="1.8">
+              <rect x="5" y="11" width="14" height="10" rx="2"/>
+              <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+            </svg>
+          </div>
+          <div class="card-num">${String(item.id).padStart(2,'0')}</div>
+          <div class="solved-badge">Unlocked ✓</div>
+        </div>
+        <div class="riddle-content">
+          <p class="card-label">Mystery #${String(item.id).padStart(2,'0')}</p>
+          <p class="riddle-question">${item.hint}</p>
+          <div class="input-row">
+            <input type="text" class="riddle-input" placeholder="اكتبي السر هنا..."
+              data-answer="${item.answer}" data-id="${item.id}" data-attempts="0"
+              autocomplete="off" dir="rtl">
+            <button class="send-btn" title="إرسال">
+              <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+          </div>
+          <div class="dots-row"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
+          <button class="cheat-btn" id="cheat-${item.id}">إظهار الإجابة الصحيحة 🔑</button>
+          <p class="story-reveal" id="story-${item.id}">${item.story}</p>
+        </div>`;
+      grid.appendChild(card);
+
+      startCanvas(card.querySelector('.card-canvas'), item.colors, item.shape);
+
+      const io=new IntersectionObserver(entries=>{
+        if(entries[0].isIntersecting){ card.classList.add('in-view'); io.disconnect(); }
+      },{threshold:.1});
+      io.observe(card);
+    });
+
+    /* EVENT ROUTING */
+    grid.addEventListener('keydown', e=>{ if(e.key==='Enter' && e.target.classList.contains('riddle-input')) handleAnswer(e.target); });
+    grid.addEventListener('click', e=>{
+      const btn=e.target.closest('.send-btn');
+      if(btn){ const inp=btn.closest('.input-row').querySelector('.riddle-input'); if(inp) handleAnswer(inp); }
+    });
+    grid.addEventListener('click', e=>{
+      if(e.target.classList.contains('cheat-btn')){
+        const inp=e.target.closest('.riddle-content').querySelector('.riddle-input');
+        if(inp){ inp.value=inp.dataset.answer; inp.focus(); showToast('تم وضع الكلمة الصحيحة، اضغطي Enter الآن 💜',3000); }
+      }
+    });
+
+    grid.addEventListener('mouseover', e=>{ if(e.target.closest('.riddle-card')) document.body.classList.add('card-hover'); });
+    grid.addEventListener('mouseout',  e=>{ if(!e.target.closest('.riddle-card')) document.body.classList.remove('card-hover'); });
+    grid.addEventListener('focusin',   e=>{ if(e.target.classList.contains('riddle-input')) document.body.classList.add('input-focus'); });
+    grid.addEventListener('focusout',  ()=> document.body.classList.remove('input-focus'));
+
+    document.getElementById('dark-mode-toggle').addEventListener('click',()=>document.body.classList.toggle('dark-mode'));
+
+    window.addEventListener('scroll',()=>{
+      const d=document.documentElement;
+      document.getElementById('scroll-progress').style.width=(d.scrollTop/(d.scrollHeight-d.clientHeight)*100)+'%';
+    });
+
+    /* ORB PIPELINE */
+    const hero=document.getElementById('tl-hero');
+    for(let i=0;i<12;i++){
+      const o=document.createElement('div'); o.className='hero-orb';
+      const sz=Math.random()*80+20;
+      o.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}%;bottom:-${sz}px;background:radial-gradient(circle,rgba(139,92,246,.08),transparent);animation-duration:${8+Math.random()*10}s;animation-delay:${-Math.random()*15}s;`;
+      hero.appendChild(o);
+    }
+  });
+
+  /* ─── PRECISE CURSOR ENGINE (ANTI-SCROLL) ─── */
+  (function initCursor() {
+    const c = document.getElementById('cursor'), r = document.getElementById('cursor-ring');
+    if (!c || !r) return;
+    let mx = -200, my = -200, rx = -200, ry = -200;
+
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    function render() {
+      c.style.transform = `translate3d(${mx}px, ${my}px, 0) translate(-50%, -50%)`;
+      rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+      r.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%)`;
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+  })();
+
+  /* ─── EASTER EGGS CORE ─── */
+  const EGGS = [
+    { id:'corner', icon:'🌙', title:'سر الزاوية المنسية', msg:'حتى الزوايا المظلمة فيها نور لما بتبصي صح.\nأنتِ النور اللي ملأت زوايا حياتي كلها يا داليا. 💜', color:'#6d28d9' },
+    { id:'logo', icon:'✨', title:'سر النجمة الخفية', msg:'النجوم مش لازم تصرخ عشان تضوي —\nزيّك بالظبط، بهاكِ صامت وعميق وبيملا كل المكان. 🌟', color:'#db2777' },
+    { id:'dalia', icon:'🌸', title:'اسمك هو السر', msg:'داليا —\nاسم من أول ما بتكتبيه بيحسّسني إن العالم اتوسّع شوية.\nأنتِ مش بس اسم، أنتِ قصة. 💜', color:'#8b5cf6' },
+    { id:'sherif', icon:'💌', title:'هو بيفكر فيكِ دايماً', msg:'حتى لو مش قدامك،\nفي شخص واحد بيفتكر اسمك كل يوم وبيبتسم.\nده أنا. 💜', color:'#be185d' },
+    { id:'konami', icon:'🎮', title:'الكود السري كُشف!', msg:'وجدتِ الكود الأسطوري! 🎮\nبس في كود تاني أصعب — كود قلبي،\nوانتِ الوحيدة اللي عندك المفتاح. 💜', color:'#7c3aed' },
+    { id:'triple', icon:'💫', title:'ثلاث مرات تكفي', msg:'بعض الأشياء محتاجة صبر — ضغطة، ضغطتين، ثلاثة.\nبس حبي ليكِ ما اتعدش من أول يوم.\nجاز وفاض من يوم ما شوفتك. 💜', color:'#9d174d' },
+    { id:'footer', icon:'🖊️', title:'الأثر في الأسفل', msg:'كل صفحة ليها نهاية —\nبس قصتنا مش عارف متى تنتهي.\nوأنا مش عايزها تنتهي. 💜', color:'#5b21b6' }
+  ];
+
+  let eggsFound = new Set();
+
+  function showEgg(id) {
+    if(eggsFound.has(id)) return;
+    eggsFound.add(id);
+    const egg = EGGS.find(e=>e.id===id); if(!egg) return;
+
+    const backdrop = document.getElementById('egg-backdrop');
+    const modal    = document.getElementById('egg-modal');
+    document.getElementById('egg-icon').textContent  = egg.icon;
+    document.getElementById('egg-title').textContent = egg.title;
+    document.getElementById('egg-msg').innerHTML     = egg.msg.replace(/\n/g,'<br/>');
+    modal.style.boxShadow = `0 20px 80px ${egg.color}33`;
+
+    backdrop.classList.add('open');
+    requestAnimationFrame(()=> requestAnimationFrame(()=> backdrop.classList.add('visible')));
+
+    showToast(egg.icon+' وجدتِ سراً مخبياً! '+ egg.icon, 2200);
+  }
+
+  document.getElementById('egg-close').addEventListener('click',()=>{
+    const b=document.getElementById('egg-backdrop'); b.classList.remove('visible'); setTimeout(()=>b.classList.remove('open'),400);
+  });
+
+  document.getElementById('hs-corner').addEventListener('click',()=> showEgg('corner'));
+  document.getElementById('hs-logo').addEventListener('click',  ()=> showEgg('logo'));
+  document.querySelector('footer').addEventListener('click', ()=> showEgg('footer'));
+
+  let keyBuffer = '';
+  const SECRET_WORDS = { 'داليا': 'dalia', 'شريف': 'sherif', 'احبك': 'dalia' };
+
+  document.addEventListener('keydown', e=>{
+    if(e.target.tagName==='INPUT') return;
+    keyBuffer += e.key;
+    if(keyBuffer.length > 12) keyBuffer = keyBuffer.slice(-12);
+
+    for(const [word, eggId] of Object.entries(SECRET_WORDS)){
+      if(keyBuffer.includes(word)){ keyBuffer=''; showEgg(eggId); break; }
+    }
+  });
+
+  (function(){
+    let clicks=0, timer;
+    document.querySelector('.tl-hero-title').addEventListener('click',()=>{
+      clicks++; clearTimeout(timer); timer=setTimeout(()=>{ clicks=0; },600);
+      if(clicks>=3){ clicks=0; showEgg('triple'); }
+    });
+  })();
+
+  let idleTimer;
+  function resetIdle(){ clearTimeout(idleTimer); idleTimer=setTimeout(()=>{ document.getElementById('secret-input-area').classList.add('show'); }, 8000); }
+  document.addEventListener('mousemove', resetIdle); document.addEventListener('keydown', resetIdle); resetIdle();
+
+  document.getElementById('secret-field').addEventListener('keydown', e=>{
+    if(e.key==='Enter'){
+      const val=e.target.value.trim(); e.target.value='';
+      document.getElementById('secret-input-area').classList.remove('show');
+      const map={'داليا':'dalia','حبيبتي':'dalia','شريف':'sherif','سر':'corner','نجمة':'logo','قدم':'footer'};
+      const found=Object.entries(map).find(([k])=>val.includes(k));
+      if(found) showEgg(found[1]); else showToast('🔍 هذا ليس السر... جربي تاني 😉',2000);
+    }
+  });
+  </script>
+</body>
+</html>

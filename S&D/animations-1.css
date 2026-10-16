@@ -1,0 +1,272 @@
+/* ═══════════════════════════════════════════════
+   animations.css — Keyframes & Reveal Classes
+   ═══════════════════════════════════════════════ */
+
+/* ─── LOADER ─── */
+@keyframes loaderFill {
+  0%   { width: 0%; }
+  60%  { width: 75%; }
+  90%  { width: 92%; }
+  100% { width: 100%; }
+}
+
+@keyframes loaderMoonPulse {
+  0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 20px rgba(157,78,221,0.5)); }
+  50%       { transform: scale(1.06) rotate(3deg); filter: drop-shadow(0 0 36px rgba(157,78,221,0.8)); }
+}
+
+@keyframes moonShimmer {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.85; }
+}
+
+@keyframes shadowShift {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(-2px, 2px); }
+}
+
+/* ─── MOON ─── */
+@keyframes moonFloat {
+  0%, 100% { transform: translateY(0) rotate(-4deg); }
+  33%       { transform: translateY(-14px) rotate(-2deg); }
+  66%       { transform: translateY(-8px) rotate(-6deg); }
+}
+
+@keyframes moonGlowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%       { opacity: 1; transform: scale(1.1); }
+}
+
+/* ─── STARS ─── */
+@keyframes starTwinkle {
+  0%, 100% { opacity: 0.5; transform: scale(0.9) rotate(0deg); }
+  25%       { opacity: 1;   transform: scale(1.2) rotate(15deg); }
+  75%       { opacity: 0.7; transform: scale(1.0) rotate(-10deg); }
+}
+
+@keyframes starFloat {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0.6; }
+  33%       { transform: translateY(-8px) translateX(4px); opacity: 1; }
+  66%       { transform: translateY(-4px) translateX(-4px); opacity: 0.8; }
+}
+
+/* ─── GEO LINES ─── */
+@keyframes geoRotate {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ─── LANTERNS ─── */
+@keyframes lanternSway {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  25%       { transform: rotate(2deg) translateY(-8px); }
+  75%       { transform: rotate(-2deg) translateY(-4px); }
+}
+
+/* ─── MUSIC BARS ─── */
+@keyframes musicBars {
+  0%, 100% { transform: scaleY(0.4); }
+  50%       { transform: scaleY(1); }
+}
+
+/* ─── BUTTON GLOW ROTATE ─── */
+@keyframes btnGlowRotate {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ─── FINAL ORB PULSE ─── */
+@keyframes finalOrbPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+  50%       { transform: translate(-50%, -50%) scale(1.15); opacity: 1; }
+}
+
+/* ─── MILESTONE IN ─── */
+@keyframes milestoneIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── CURSOR RIPPLE ─── */
+@keyframes cursorRipple {
+  0%   { transform: translate(-50%, -50%) scale(0.5); opacity: 0.8; }
+  100% { transform: translate(-50%, -50%) scale(3); opacity: 0; }
+}
+
+/* ─── FLOATING GLOW ORBS ─── */
+@keyframes floatOrb1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(40px, -30px) scale(1.1); }
+  66%       { transform: translate(-20px, -60px) scale(0.95); }
+}
+
+@keyframes floatOrb2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-50px, 30px) scale(1.08); }
+  80%       { transform: translate(30px, 60px) scale(0.92); }
+}
+
+@keyframes floatOrb3 {
+  0%, 100% { transform: translate(0, 0); }
+  50%       { transform: translate(20px, -40px); }
+}
+
+/* ─── PAGE TRANSITION LAYERS ─── */
+@keyframes ptSlideIn {
+  from { transform: scaleY(0); transform-origin: bottom; }
+  to   { transform: scaleY(1); transform-origin: bottom; }
+}
+
+@keyframes ptSlideOut {
+  from { transform: scaleY(1); transform-origin: top; }
+  to   { transform: scaleY(0); transform-origin: top; }
+}
+
+/* ─── TEXT REVEAL ─── */
+@keyframes textRevealUp {
+  from { opacity: 0; transform: translateY(30px) skewY(1deg); }
+  to   { opacity: 1; transform: translateY(0) skewY(0deg); }
+}
+
+@keyframes textRevealFade {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(157,78,221,0.3); }
+  50%       { box-shadow: 0 0 50px rgba(157,78,221,0.6), 0 0 80px rgba(157,78,221,0.2); }
+}
+
+/* ─── ANIMATED BACKGROUND GRADIENT ─── */
+@keyframes bgShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ─── COUNTER TICK ─── */
+@keyframes numTick {
+  0%   { transform: translateY(0) scale(1); }
+  30%  { transform: translateY(-6px) scale(1.1); }
+  70%  { transform: translateY(3px) scale(0.95); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* ─── FADE IN UP (utility) ─── */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease-expo), transform 0.9s var(--ease-expo);
+}
+
+.reveal-up.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── REVEAL CARD ─── */
+.reveal-card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo);
+}
+
+.reveal-card.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── REVEAL MILESTONE ─── */
+.reveal-milestone {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease-expo), transform 0.8s var(--ease-expo);
+}
+
+.reveal-milestone.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── GLOW RING (decorative) ─── */
+.glow-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  animation: glowRingExpand 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes glowRingExpand {
+  0%   { transform: scale(0.8); opacity: 0.4; }
+  50%  { transform: scale(1.1); opacity: 0.1; }
+  100% { transform: scale(0.8); opacity: 0.4; }
+}
+
+/* ─── TYPING CURSOR ─── */
+.typing-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--clr-purple-l);
+  margin-left: 3px;
+  vertical-align: middle;
+  animation: typingCursor 1s ease-in-out infinite;
+}
+
+@keyframes typingCursor {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ─── SCROLL DOWN INDICATOR ─── */
+.scroll-indicator {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: scrollIndFade 1s ease-in-out 4s forwards;
+}
+
+.scroll-indicator span {
+  font-size: 0.55rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--clr-muted);
+}
+
+.scroll-indicator-line {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, var(--clr-purple-m), transparent);
+  animation: scrollLineDrop 1.5s ease-in-out infinite;
+}
+
+@keyframes scrollIndFade {
+  to { opacity: 0.7; }
+}
+
+@keyframes scrollLineDrop {
+  0%   { transform: scaleY(0); transform-origin: top; opacity: 0; }
+  50%  { transform: scaleY(1); transform-origin: top; opacity: 1; }
+  51%  { transform: scaleY(1); transform-origin: bottom; opacity: 1; }
+  100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
+}
+
+/* ─── SPARKLE DOT ─── */
+@keyframes sparkleDot {
+  0%, 100% { transform: scale(0) rotate(0); opacity: 0; }
+  50%       { transform: scale(1) rotate(180deg); opacity: 1; }
+}
+
+/* ─── PARTICLE GLOW ─── */
+@keyframes particleGlow {
+  0%, 100% { box-shadow: 0 0 6px var(--clr-purple-m); }
+  50%       { box-shadow: 0 0 16px var(--clr-purple-l), 0 0 32px rgba(157,78,221,0.3); }
+}

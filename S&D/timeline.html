@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Story — Dalia & Shreif</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Josefin+Sans:wght@100;200;300;400&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style-1.css"/>
+  <link rel="stylesheet" href="animations-1.css"/>
+</head>
+<body class="timeline-body">
+
+  <div id="celestial-lock" class="celestial-lock-screen">
+    <div class="lock-btn-wrap">
+      <button id="lock-btn" class="lock-hold-btn"> Click    here </button>
+      
+      <svg class="lock-progress-svg" viewBox="0 0 280 80">
+        <rect class="lock-progress-bg" x="4" y="4" rx="36" ry="36" width="272" height="72"/>
+        <rect id="lock-progress-bar" class="lock-progress-bar" x="4" y="4" rx="36" ry="36" width="272" height="72"/>
+      </svg>
+    </div>
+    <p class="lock-hint">✦ I love you ✦</p>
+  </div>
+
+  <div id="morning-overlay" class="cosmic-fullscreen-overlay">
+    <div class="morning-message">Wait, my love...</div>
+  </div>
+
+  <div id="vortex-overlay" class="cosmic-fullscreen-overlay">
+    <div class="vortex-container">
+      <div id="vortex-countdown" class="vortex-timer-num"></div>
+      <h1 id="vortex-dalia-title" class="neon-dalia-text">DALIA</h1>
+      <div id="vortex-secret-box" class="vortex-glass-panel">
+        <p id="vortex-typing-text"></p>
+      </div>
+    </div>
+  </div>
+
+  <div id="cursor"></div>
+  <div id="cursor-trail"></div>
+
+  <canvas id="particles-canvas"></canvas>
+
+  <div id="scroll-progress"></div>
+
+  <div id="music-ctrl" class="music-ctrl" title="Toggle music">
+    <div class="music-icon" id="music-icon">
+      <span></span><span></span><span></span><span></span><span></span>
+    </div>
+    <span class="music-label">Ambient</span>
+  </div>
+
+  <div id="toast" class="toast"></div>
+
+  <nav id="main-nav" class="visible">
+    <a href="index.html" class="nav-logo nav-back">
+      <svg viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+      <span>Dalia</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Home</a>
+      <a href="#" class="nav-link" style="color:var(--clr-gold); font-weight:600;">The Gallery ✦</a>
+      <button id="dark-mode-toggle" class="nav-link" style="background:none; border:none; cursor:pointer; font-size:1.1rem;">🌓</button>
+    </div>
+  </nav>
+
+  <section id="tl-hero">
+    <div class="tl-hero-content">
+      <p class="tl-eyebrow reveal-up">Our Story</p>
+      <h1 class="tl-hero-title reveal-up">Every moment<br/><em>was written</em></h1>
+      <p class="tl-hero-sub reveal-up">in the stars</p>
+    </div>
+    <div class="tl-moon" id="tl-moon">
+      <svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="tlMoonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#c084fc"/>
+            <stop offset="100%" stop-color="#6b21a8"/>
+          </linearGradient>
+          <filter id="tlGlow">
+            <feGaussianBlur stdDeviation="4" result="b"/>
+            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M80,20 A60,60 0 1,0 140,80 A50,50 0 1,1 80,20 Z" fill="url(#tlMoonGrad)" filter="url(#tlGlow)"/>
+      </svg>
+    </div>
+  </section>
+
+  <div id="gift-capsule" style="display:none; text-align:center; padding:20px; background:var(--clr-glass); margin:20px auto; max-width:500px; border-radius:12px; border:1px solid var(--clr-glass-b);">
+    <p style="font-family:var(--font-arabic); font-size:0.95rem; color:var(--clr-text);">داليا.. هناك مفاجأة لكي لا تنسي </p>
+    <button onclick="window.bindGoogleCalendarCta()" style="margin-top:10px; padding:8px 16px; background:var(--clr-purple); color:white; border:none; border-radius:20px; cursor:pointer;">أضيفي الموعد السحري ✦</button>
+  </div>
+
+  <section id="counter-section">
+    <div class="counter-wrap">
+      <p class="counter-label reveal-up">Together since</p>
+      <p class="counter-date reveal-up" id="counter-date-display"></p>
+      <div class="counter-grid reveal-up" id="counter-grid">
+        <div class="counter-unit" id="cu-years">
+          <span class="cu-num" id="c-years">0</span>
+          <span class="cu-label">Years</span>
+        </div>
+        <div class="counter-sep">✦</div>
+        <div class="counter-unit" id="cu-months">
+          <span class="cu-num" id="c-months">0</span>
+          <span class="cu-label">Months</span>
+        </div>
+        <div class="counter-sep">✦</div>
+        <div class="counter-unit" id="cu-weeks">
+          <span class="cu-num" id="c-weeks">0</span>
+          <span class="cu-label">Weeks</span>
+        </div>
+        <div class="counter-sep">✦</div>
+        <div class="counter-unit" id="cu-days">
+          <span class="cu-num" id="c-days">0</span>
+          <span class="cu-label">Days</span>
+        </div>
+        <div class="counter-unit wide" id="cu-hours">
+          <span class="cu-num" id="c-hours">0</span>
+          <span class="cu-label">Hours</span>
+        </div>
+        <div class="counter-sep">✦</div>
+        <div class="counter-unit" id="cu-mins">
+          <span class="cu-num" id="c-mins">0</span>
+          <span class="cu-label">Minutes</span>
+        </div>
+        <div class="counter-sep">✦</div>
+        <div class="counter-unit" id="cu-secs">
+          <span class="cu-num" id="c-secs">0</span>
+          <span class="cu-label">Seconds</span>
+        </div>
+      </div>
+      <p class="counter-suffix reveal-up">…and counting.</p>
+    </div>
+  </section>
+
+  <section id="section-beginning" class="tl-section">
+    <div class="section-header reveal-up">
+      <span class="section-num">01</span>
+      <h2 class="section-title">The Beginning</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="tl-cards-wrap" id="beginning-cards">
+      <div class="tl-card reveal-card" data-delay="0">
+        <div class="card-inner">
+          <div class="card-icon"></div>
+          <h3 class="card-title">First Light</h3>
+          <p class="card-text">I don't want anything, just my hand in yours, and the rest doesn't matter.</p>
+          <div class="card-glow"></div>
+        </div>
+      </div>
+      <div class="tl-card reveal-card" data-delay="150">
+        <div class="card-inner">
+          <div class="card-icon"></div>
+          <h3 class="card-title">The Moment</h3>
+          <p class="card-text">To the world, you may be one person, But to one person, you may be the world.</p>
+          <div class="card-glow"></div>
+        </div>
+      </div>
+      <div class="tl-card reveal-card" data-delay="300">
+        <div class="card-inner">
+          <div class="card-icon"></div>
+          <h3 class="card-title">Something New</h3>
+          <p class="card-text">I didn't know then that I was meeting someone who would redefine what it means to feel seen, known, and truly at peace.</p>
+          <div class="card-glow"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tl-line-section">
+    <div class="tl-vertical">
+      <div class="tl-spine" id="tl-spine"></div>
+
+      <div class="milestone reveal-milestone" data-side="left">
+        <div class="ms-dot"></div>
+        <div class="ms-card">
+          <span class="ms-tag">Chapter I</span>
+          <h3>The First Hello</h3>
+          <p>The day you came into my life, you brought me back to life again.</p>
+        </div>
+      </div>
+
+      <div class="milestone reveal-milestone" data-side="right">
+        <div class="ms-dot"></div>
+        <div class="ms-card">
+          <span class="ms-tag">Chapter II</span>
+          <h3>Late Night Conversations</h3>
+          <p>The best moments of my life were the nights I spent talking to you.“You are the cause of my euphoria.”</p>
+        </div>
+      </div>
+
+      <div class="milestone reveal-milestone" data-side="left">
+        <div class="ms-dot"></div>
+        <div class="ms-card">
+          <span class="ms-tag">Chapter III</span>
+          <h3>When I Knew</h3>
+          <p>When I knew you, I stopped feeling alone in this world.“You gave me the best of me.”</p>
+        </div>
+      </div>
+
+      <div class="milestone reveal-milestone" data-side="right">
+        <div class="ms-dot"></div>
+        <div class="ms-card">
+          <span class="ms-tag">Chapter IV</span>
+          <h3>Every Eid With You</h3>
+          <p>This Eid feels different with you in my life.
+“You are the reason I shine, I am your light.” —
+And meeting you was the best thing that ever happened to me.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-moments" class="tl-section">
+    <div class="section-header reveal-up">
+      <span class="section-num">02</span>
+      <h2 class="section-title">Untold Feelings</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="moments-grid" id="moments-grid">
+      <div class="moment-item reveal-card" data-delay="0">
+        <div class="moment-inner">
+          <span class="moment-num">001</span>
+          <p>ان لم تكون لي في الحياة مرافقا 
+ف انا الذي في الموت قد ات معك</p>
+        </div>
+      </div>
+      <div class="moment-item reveal-card" data-delay="100">
+        <div class="moment-inner">
+          <span class="moment-num">002</span>
+          <p>ولعلنا من بعد بُعد نلتقي
+ويطيب قلبي عندما الاقاكِ
+ويراكِ بعض الناس شخص عابرآ
+وأنا أراكِ حبيبتي وملاكي</p>
+        </div>
+      </div>
+      <div class="moment-item reveal-card" data-delay="200">
+        <div class="moment-inner">
+          <span class="moment-num">003</span>
+          <p>اني عشقتك واتخذت قراري
+فلمن اقدم يا ترى اعذاري؟!
+لا سلطة في الحب تعلو سلطتي
+فالراي رايي والاختيار خياري
+هذه احاسيسي فلا تتدخلي ارجوك
+بين البحر والبحار</p>
+        </div>
+      </div>
+      <div class="moment-item reveal-card" data-delay="300">
+        <div class="moment-inner">
+          <span class="moment-num">004</span>
+          <p>رجل وما استسلمت قبل لفارس
+مالي أمام عيونها مستسلم
+أأعود منتصرا بكل معاركي
+وأمام عينيها البريئة أهزم ؟!
+أنا شاعر ما أسعفته حروفه
+الحب من لغة المشاعر أعظمُلي ألف بيت بالفصيح أجدتها
+لكنني في حبها أتلعثمُ</p>
+        </div>
+      </div>
+      <div class="moment-item reveal-card" data-delay="400">
+        <div class="moment-inner">
+          <span class="moment-num">005</span>
+          <p>ولقد رأيتك في منامي ليلةً
+فنسيت ما قد كان من احزاني
+وحسبت نومي في وجودك يقظه
+حتى افقت على فراقٍ ثاني
+لو كنت اعلم ان الحلم يجمعنا لأغمضت طول الدهر اجفاني</p>
+        </div>
+      </div>
+      <div class="moment-item reveal-card" data-delay="500">
+        <div class="moment-inner">
+          <span class="moment-num">006</span>
+          <p>قلي لماذا اخترتني ! و اخذتني بيديك من يين الالم و مشيت بي ومشيت ثم تركتني</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="section-counting" class="tl-section">
+    <div class="section-header reveal-up">
+      <span class="section-num">03</span>
+      <h2 class="section-title">Still Counting…</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="counting-wrap reveal-up">
+      <p class="counting-text">
+        I hope you liked the website, and I hope I’m not bothering you in your life.
+I truly wish you are my destiny, and I still believe there is hope.
+
+We may have spent a short time together, but it was the best time of my life, and I wish it continues.
+I tried to make you happy this Eid with a message from me.
+
+And honestly… I don’t want anyone but you, ya set el banat.
+      </p>
+      <div class="counting-divider">
+        <span></span><span class="div-diamond">◆</span><span></span>
+      </div>
+      <div class="big-seconds">
+        <span class="bs-label">Seconds of us:</span>
+        <span class="bs-num" id="big-secs">0</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="final-section">
+    <canvas id="final-stars-canvas"></canvas>
+    <div class="final-content" id="final-content">
+      <div class="final-glow-orb"></div>
+      <p class="final-eyebrow">From Shreif, to Dalia</p>
+      <h2 class="final-title" id="final-title">
+        <em> I purple You, Dalia.</em>
+      </h2>
+      <div class="final-divider">
+        <span></span><span class="div-diamond">◆</span><span></span>
+      </div>
+      <p class="final-sign">— Shreif</p>
+      <p class="final-arabic">كل عام وأنتِ بخير يا داليا</p>
+
+      <div class="final-stars-row" id="final-stars-row">
+        <span class="fs" data-msg="If you are ready and if you alll let me, I wanna see it in 3D">✦</span>
+        <span class="fs" data-msg="I purple you, always">✦</span>
+        
+        <span class="fs" data-msg="وحين إشتد الشوق في قلبي قلت ربي أرني إياه ولو حلماً">✦</span>
+        <span class="fs" data-msg="This was made with every feeling I haveWeight of the world on your shoulders / I kiss your waist and ease your mind">✦</span>
+        <span class="fs" data-msg="You light up my whole world, custom-made for me">✦</span>
+        <span class="fs" data-msg="لا أريدُ شَيْئاً فَقَط يَدِي فِي يَدكُ وَ الباقي لَا يُهِمْ">✦</span>
+      </div>
+      <div class="final-easter-msg" id="final-easter-msg"></div>
+
+      <a href="index.html" class="back-btn">
+        <span>← Back to the Beginning</span>
+      </a>
+    </div>
+  </section>
+
+  <div id="page-transition">
+    <div class="pt-layer pt-1"></div>
+    <div class="pt-layer pt-2"></div>
+    <div class="pt-layer pt-3"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/TextPlugin.min.js"></script>
+  <script src="particles.js"></script>
+  <script src="music.js"></script>
+  <script src="animations.js"></script>
+  <script src="timeline.js"></script>
+  
+</body>
+</html>
